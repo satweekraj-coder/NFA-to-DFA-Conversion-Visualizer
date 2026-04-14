@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NFA → DFA Conversion Visualizer</title>
+  <link rel="stylesheet" href="./style.css" />
+
+  <!-- Cytoscape for graph rendering -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.28.1/cytoscape.min.js"></script>
+  <!-- dagre layout for Cytoscape -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dagre/0.8.5/dagre.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/cytoscape-dagre@2.5.0/cytoscape-dagre.min.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">∑</span>
+        <div>
+          <div class="logo-title">NFA → DFA</div>
+          <div class="logo-sub">Subset Construction Visualizer</div>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-icon" id="darkModeToggle" title="Toggle Dark Mode">☀</button>
+        <button class="btn-icon" id="exportBtn" title="Export DFA as JSON">⬇ JSON</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-layout">
+
+    <!-- LEFT PANEL: NFA Input -->
+    <aside class="panel panel-input" id="inputPanel">
+      <div class="panel-header">
+        <span class="panel-icon">✏</span>
+        <span>NFA Definition</span>
+      </div>
+
+      <div class="panel-body">
+        <div class="field-group">
+          <label>States <span class="hint">(comma-separated)</span></label>
+          <input type="text" id="states" placeholder="q0, q1, q2" />
+        </div>
+        <div class="field-group">
+          <label>Alphabet <span class="hint">(no ε)</span></label>
+          <input type="text" id="alphabet" placeholder="0, 1" />
+        </div>
+        <div class="field-group">
+          <label>Start State</label>
+          <input type="text" id="startState" placeholder="q0" />
+        </div>
+        <div class="field-group">
+          <label>Final States <span class="hint">(comma-separated)</span></label>
+          <input type="text" id="finalStates" placeholder="q2" />
+        </div>
+
+        <div class="field-group">
+          <label>Transitions</label>
+          <div id="transitionTable" class="transition-table-wrapper">
+            <div class="t-header" id="tHeader"></div>
+            <div id="tRows"></div>
+          </div>
+          <button class="btn-sm btn-ghost" id="buildTableBtn">⟳ Build Transition Table</button>
+        </div>
+
+        <div class="action-row">
+          <button class="btn-sample" id="sampleBtn">Load Sample NFA</button>
+          <button class="btn-convert" id="convertBtn">Convert to DFA →</button>
+        </div>
+
+        <div id="errorBox" class="error-box hidden"></div>
+      </div>
+    </aside>
+
+    <!-- CENTER: Graphs -->
+    <section class="panel panel-graphs">
+      <div class="graphs-row">
+        <div class="graph-card">
+          <div class="panel-header">
+            <span class="panel-icon">◎</span>
+            <span>NFA Graph</span>
+          </div>
+          <div id="nfaGraph" class="graph-container"></div>
+        </div>
+        <div class="graph-card">
+          <div class="panel-header">
+            <span class="panel-icon">◉</span>
+            <span>DFA Graph</span>
+          </div>
+          <div id="dfaGraph" class="graph-container"></div>
+        </div>
+      </div>
+
+      <!-- Step Visualization -->
+      <div class="panel steps-panel" id="stepsPanel">
+        <div class="panel-header">
+          <span class="panel-icon">⚙</span>
+          <span>Step-by-Step Subset Construction</span>
+          <span class="step-counter" id="stepCounter"></span>
+        </div>
+        <div class="steps-body">
+          <div id="stepDisplay" class="step-display">
+            <div class="step-placeholder">Run conversion to see step-by-step trace.</div>
+          </div>
+        </div>
+        <div class="controls-bar">
+          <button class="ctrl-btn" id="prevBtn" disabled>◀ Prev</button>
+          <button class="ctrl-btn" id="autoPlayBtn" disabled>▶ Auto Play</button>
+          <button class="ctrl-btn" id="nextBtn" disabled>Next ▶</button>
+          <button class="ctrl-btn ctrl-reset" id="resetBtn">↺ Reset</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT PANEL: DFA Table -->
+    <aside class="panel panel-table">
+      <div class="panel-header">
+        <span class="panel-icon">▦</span>
+        <span>DFA Transition Table</span>
+      </div>
+      <div class="panel-body">
+        <div id="dfaTableWrapper">
+          <div class="table-placeholder">DFA table appears here after conversion.</div>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>
