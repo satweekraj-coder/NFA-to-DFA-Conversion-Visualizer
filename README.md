@@ -1,4 +1,6 @@
-# 🚀 NFA → DFA Conversion Visualizer
+# 🌐 Live project URL
+
+[(https://satweek2024ucs1504tafl.netlify.app/)](https://satweek2024ucs1504tafl.netlify.app/)# 🚀 NFA → DFA Conversion Visualizer
 
 A modern web application that demonstrates the **conversion of a Non-deterministic Finite Automaton (NFA) into a Deterministic Finite Automaton (DFA)** using the **Subset Construction Algorithm**.
 
